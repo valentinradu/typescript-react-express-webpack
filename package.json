@@ -21,6 +21,9 @@
     "react-google-maps": "^9.4.5",
     "subscriptions-transport-ws": "^0.9.8"
   },
+  "config": {
+    "server_url": "http://localhost"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "clean-server": "rimraf dist/index.js ",
@@ -31,10 +34,14 @@
     "build-client:dev": "NODE_ENV=development webpack-dev-server --config tools/build/webpack.client.config.js --colors --watch --mode development",
     "build-server:dev": "npm run build-server -- --watch",
     "start:dev": "pm2 start tools/server/ecosystem.dev.config.js",
+    "stop:dev": "pm2 stop tools/server/ecosystem.dev.config.js",
+    "restart:dev": "pm2 restart tools/server/ecosystem.dev.config.js",
     "start": "pm2 start tools/server/ecosystem.config.js",
     "lint": "npm run lint-client && npm run lint-server",
     "lint-client": "tslint --project tsconfig.json",
-    "lint-server": "tslint --project tsconfig.json"
+    "lint-server": "tslint --project tsconfig.json",
+    "build-graphql-schema": "apollo-codegen introspect-schema $npm_package_config_server_url/graphql --output schema.json",
+    "build-graphql-types": "npm run build-graphql-schema && apollo-codegen generate graphql/**/*.gql --schema schema.json --target typescript --output types/graphql-types.ts && rm schema.json"
   },
   "devDependencies": {
     "@types/express": "^4.11.1",

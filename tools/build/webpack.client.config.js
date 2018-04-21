@@ -54,12 +54,17 @@ webpackConfig.output = output
 if (isProduction) {
   webpackConfig.entry = [path.join(srcPath, 'app/index')]
   webpackConfig.devtool = 'source-map'
-  output.publicPath = './'
+  output.publicPath = '/static'
   rules.push({
     test: /\.scss$/,
     loader: ExtractSASS.extract(['css-loader', 'sass-loader']),
   })
   plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false,
+      },
+    }),
     ExtractSASS
   )
 } else {
@@ -79,7 +84,7 @@ if (isProduction) {
     port,
     inline: true,
     progress: true,
-    historyApiFallback: true,
+    historyApiFallback: true
   }
 }
 
