@@ -89,11 +89,23 @@
     "@types/node" "*"
     "@types/react" "*"
 
+"@types/react-helmet@^5.0.5":
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/@types/react-helmet/-/react-helmet-5.0.5.tgz#30a12b0431732a20882f0fa9b75bf56ff91700d3"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^16.3.12":
   version "16.3.12"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.12.tgz#68d9146f3e9797e38ffbf22f7ed1dde91a2cfd2e"
   dependencies:
     csstype "^2.2.0"
+
+"@types/reactstrap@^5.0.21":
+  version "5.0.21"
+  resolved "https://registry.yarnpkg.com/@types/reactstrap/-/reactstrap-5.0.21.tgz#212226b4d53b7a536775d82f981ad0c1770992be"
+  dependencies:
+    "@types/react" "*"
 
 "@types/serve-static@*":
   version "1.13.1"
@@ -101,6 +113,12 @@
   dependencies:
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
+
+"@types/uuid@^3.4.3":
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-3.4.3.tgz#121ace265f5569ce40f4f6d0ff78a338c732a754"
+  dependencies:
+    "@types/node" "*"
 
 "@types/zen-observable@^0.5.3":
   version "0.5.3"
@@ -225,7 +243,7 @@ apollo-cache@^1.1.7:
   dependencies:
     apollo-utilities "^1.0.11"
 
-apollo-client@^2.2.8:
+apollo-client@^2.2.3, apollo-client@^2.2.8:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-2.2.8.tgz#b604d31ab2d2dd00db3105d8793b93ee02ce567e"
   dependencies:
@@ -1456,7 +1474,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5:
+classnames@^2.2.3, classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
@@ -2107,6 +2125,10 @@ dom-converter@~0.1:
   dependencies:
     utila "~0.3"
 
+dom-helpers@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.3.1.tgz#fc1a4e15ffdf60ddde03a480a9c0fece821dd4a6"
+
 dom-serializer@0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-0.1.0.tgz#073c697546ce0780ce23be4a28e293e40bc30c82"
@@ -2267,6 +2289,10 @@ es-abstract@^1.5.1, es-abstract@^1.7.0:
     is-callable "^1.1.3"
     is-regex "^1.0.4"
 
+es-cookie@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/es-cookie/-/es-cookie-1.1.1.tgz#96ed2ae593d2cc5451a5ca96e2c844f1aeaa69f0"
+
 es-to-primitive@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/es-to-primitive/-/es-to-primitive-1.1.1.tgz#45355248a88979034b6792e19bb81f2b7975dd0d"
@@ -2364,6 +2390,10 @@ execa@^0.7.0:
     p-finally "^1.0.0"
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
+
+exenv@^1.2.1:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
 
 exit-hook@^1.0.0:
   version "1.1.1"
@@ -3030,7 +3060,7 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoist-non-react-statics@^2.3.1:
+hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.0.tgz#d2ca2dfc19c5a91c5a6615ce8e564ef0347e2a40"
 
@@ -3873,6 +3903,10 @@ lodash.isequal@^4.0.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
 
+lodash.isfunction@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/lodash.isfunction/-/lodash.isfunction-3.0.9.tgz#06de25df4db327ac931981d1bdb067e5af68d051"
+
 lodash.isobject@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/lodash.isobject/-/lodash.isobject-3.0.2.tgz#3c8fb8d5b5bf4bf90ae06e14f2a530a4ed935e1d"
@@ -3893,11 +3927,15 @@ lodash.tail@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.tail/-/lodash.tail-4.1.1.tgz#d2333a36d9e7717c8ad2f7cacafec7c32b444664"
 
+lodash.tonumber@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/lodash.tonumber/-/lodash.tonumber-4.0.3.tgz#0b96b31b35672793eb7f5a63ee791f1b9e9025d9"
+
 lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.2, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.3.0:
+lodash@4.17.5, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.2, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.3.0:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
@@ -4891,7 +4929,7 @@ pmx@^1.6:
     semver "5.*"
     vxx "^1.2.0"
 
-popper.js@^1.14.1:
+popper.js@^1.12.9, popper.js@^1.14.1:
   version "1.14.3"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.3.tgz#1438f98d046acf7b4d78cd502bf418ac64d4f095"
 
@@ -5208,7 +5246,7 @@ promptly@2.2.0:
   dependencies:
     read "^1.0.4"
 
-prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
+prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -5353,6 +5391,16 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-apollo@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-2.1.3.tgz#5eb02cdf18cc4bdeb615bda94baedb50354e94e5"
+  dependencies:
+    fbjs "^0.8.16"
+    hoist-non-react-statics "^2.5.0"
+    invariant "^2.2.2"
+    lodash "4.17.5"
+    prop-types "^15.6.0"
+
 react-datepicker@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-1.4.1.tgz#ee171b71d9853e56f9eece5fc3186402f4648683"
@@ -5387,15 +5435,46 @@ react-google-maps@^9.4.5:
     scriptjs "^2.5.8"
     warning "^3.0.0"
 
+react-helmet@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.2.0.tgz#a81811df21313a6d55c5f058c4aeba5d6f3d97a7"
+  dependencies:
+    deep-equal "^1.0.1"
+    object-assign "^4.1.1"
+    prop-types "^15.5.4"
+    react-side-effect "^1.1.0"
+
 react-onclickoutside@^6.7.1:
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
+
+react-popper@^0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.8.3.tgz#0f73333137c9fb0af6ec4074d2d0585a0a0461e1"
+  dependencies:
+    popper.js "^1.12.9"
+    prop-types "^15.6.0"
 
 react-popper@^0.9.1:
   version "0.9.5"
   resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.9.5.tgz#02a24ef3eec33af9e54e8358ab70eb0e331edd05"
   dependencies:
     popper.js "^1.14.1"
+    prop-types "^15.6.1"
+
+react-side-effect@^1.1.0:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-1.1.5.tgz#f26059e50ed9c626d91d661b9f3c8bb38cd0ff2d"
+  dependencies:
+    exenv "^1.2.1"
+    shallowequal "^1.0.1"
+
+react-transition-group@^2.2.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.3.1.tgz#31d611b33e143a5e0f2d94c348e026a0f3b474b6"
+  dependencies:
+    dom-helpers "^3.3.1"
+    loose-envify "^1.3.1"
     prop-types "^15.6.1"
 
 react@^16.3.2:
@@ -5406,6 +5485,18 @@ react@^16.3.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+reactstrap@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/reactstrap/-/reactstrap-5.0.0.tgz#d8948534df4816eddfb162a51643a499388e9228"
+  dependencies:
+    classnames "^2.2.3"
+    lodash.isfunction "^3.0.9"
+    lodash.isobject "^3.0.2"
+    lodash.tonumber "^4.0.3"
+    prop-types "^15.5.8"
+    react-popper "^0.8.3"
+    react-transition-group "^2.2.1"
 
 read-chunk@^2.1.0:
   version "2.1.0"
@@ -5732,7 +5823,7 @@ rx-lite@*, rx-lite@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
 
-rxjs@^5.4.2, rxjs@^5.5.2:
+rxjs@^5.4.2, rxjs@^5.5.10, rxjs@^5.5.2:
   version "5.5.10"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.10.tgz#fde02d7a614f6c8683d0d1957827f492e09db045"
   dependencies:
@@ -5897,6 +5988,10 @@ shallow-clone@^1.0.0:
     is-extendable "^0.1.1"
     kind-of "^5.0.0"
     mixin-object "^2.0.1"
+
+shallowequal@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.0.2.tgz#1561dbdefb8c01408100319085764da3fcf83f8f"
 
 shebang-command@^1.2.0:
   version "1.2.0"

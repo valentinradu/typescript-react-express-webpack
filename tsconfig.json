@@ -16,7 +16,11 @@
     "strictNullChecks": true,
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+      "types"
+    ]
   },
   "include": [
     "src/**/*"
