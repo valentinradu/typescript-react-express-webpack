@@ -1,2 +1,4 @@
-export const PORT = 8080
-export const NODE_ENV = 'development'
+module.exports = {
+    PORT: 8080,
+    NODE_ENV: 'development'
+}
