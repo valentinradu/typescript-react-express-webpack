@@ -13,8 +13,9 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  Input,
-  Row
+  Form,
+  FormGroup,
+  Input
 } from 'reactstrap'
 
 namespace Login {
@@ -25,8 +26,7 @@ namespace Login {
   export interface State {
     model: Common.Model,
     kind: Kind
-    email?: string
-    phone?: string
+    isCaptchaReady: boolean
   }
   enum Kind {
     unknown,
@@ -35,118 +35,139 @@ namespace Login {
   }
   export class Component extends React.Component<Props, State> {
     modelSubs?: Rx.Subscription
-    recaptcha?: firebase.auth.RecaptchaVerifier
+    recaptchaRef = React.createRef<HTMLDivElement>()
+    sendButtonRef?: HTMLButtonElement
+    fieldInputRef?: HTMLInputElement
     constructor (props: Props) {
       super(props)
-      this.state = { model: props.modelObservable.value, kind: Kind.unknown }
+      this.state = { 
+        model: props.modelObservable.value, 
+        kind: Kind.unknown,
+        isCaptchaReady: false
+      }
     }
     componentDidMount () {
       this.modelSubs = this.props.modelObservable
-        .subscribe((model) => {
-          this.setState({ model })
-        })
+        .subscribe((model) => { this.setState({ model }) })
     }
     componentWillUnmount () {
       if (this.modelSubs) {
         this.modelSubs.unsubscribe()
       }
     }
-    componentDidUpdate () {
-      if (this.state.kind != Kind.unknown && this.recaptcha == null) {
-        this.recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha', {
-          size: 'invisible'
+    handleModalOpen () {
+      const captchaReady = Rx.Observable.create((observer: Rx.Observer<firebase.auth.RecaptchaVerifier>) => {
+        const recaptchaVerifier = new firebase.auth.RecaptchaVerifier(this.recaptchaRef.current, {
+          'size': 'normal',
+          'callback': () => {
+            this.setState({ isCaptchaReady: true })
+            observer.next(recaptchaVerifier)
+            observer.complete()
+          }
         })
-      }
-    }
-    withPhone () {
-      if (this.state.phone && this.recaptcha) {
-        this.handleToken(firebase.auth().signInWithPhoneNumber(this.state.phone, this.recaptcha))
-      }
-    }
-    withEmail () {
-      const settings = {
-        url: window.location.href,
-        handleCodeInApp: true
-      }
-      if (this.state.email) {
-        this.handleToken(firebase.auth().sendSignInLinkToEmail(this.state.email, settings))
-      }
-    }
-    handleToken (promise: Promise<void>) {
-      return promise
-      .then(() => {
-        const user = firebase.auth().currentUser
-        if (user) {
-          return user.getIdToken(true)
-        }
-        else {
-          throw new Error('User is not logged in')
-        }
-      })
-      .then((token) => {
-        let model = this.state.model
-        model.token = token
-        this.props.modelObservable.next(model)
-      })
-      .catch((error: Error) => {
-        this.props.modelObservable.error(error)
-      })
-    }
-    handleEmailInput (event: React.ChangeEvent<HTMLInputElement>) {
-      this.setState({
-        email: event.target.value
-      })
-    }
-    handlePhoneInput (event: React.ChangeEvent<HTMLInputElement>) {
-      this.setState({
-        phone: event.target.value
-      })
+        recaptchaVerifier.render()
+      }) as Rx.Observable<firebase.auth.RecaptchaVerifier>
+
+      const inputValid = Rx.Observable.fromEvent<React.ChangeEvent<HTMLInputElement>>(this.fieldInputRef!, 'change')
+      const sendPressed = Rx.Observable.fromEvent<React.MouseEvent<HTMLButtonElement>>(this.sendButtonRef!, 'click')
+        .do((e) => e.preventDefault())
+      
+      Rx.Observable.combineLatest(captchaReady, inputValid, sendPressed)
+        .flatMap(
+          ([captcha, input, button]) => {
+            if (input.target) {
+              const value = input.target.value
+              if (this.state.kind == Kind.phone) {
+                const promise = firebase.auth().signInWithPhoneNumber(value, captcha)
+                return Rx.Observable.fromPromise(promise)
+              }
+              else {
+                const settings = {
+                  url: window.location.href,
+                  handleCodeInApp: true
+                }
+                const promise = firebase.auth().sendSignInLinkToEmail(value, settings)
+                return Rx.Observable.fromPromise(promise)
+              }
+            }
+            else {
+              return Rx.Observable.empty()
+            }
+          }
+        )
+        .subscribe(
+          () => {
+
+          },
+          (error) => {
+
+          }
+        )
+  
+
+      // 
+      //     .then(this.handleToken)
+      //     .catch((error: Error) => {
+      //       console.log(error)
+      //       this.props.modelObservable.error(error)
+      //     })
+      
+      
+      // this.setState({ isCaptchaReady: false })
+      // 
+      // if (this.state.email) {
+      //   firebase.auth().(this.state.email, settings)
+      //     .then(this.handleToken)
+      //     .catch((error: Error) => {
+      //       console.log(error)
+      //       this.props.modelObservable.error(error)
+      //     })
+      // }
+      // return new Promise<void>
+      // .then(() => {
+      //   const user = firebase.auth().currentUser
+      //   if (user) {
+      //     return user.getIdToken(true)
+      //   }
+      //   else {
+      //     throw new Error('User is not logged in')
+      //   }
+      // })
+      // .then((token) => {
+      //   let model = this.state.model
+      //   model.token = token
+      //   this.props.modelObservable.next(model)
+      // })
     }
     render () {
-      type ModalInfo = [
-        Common.UIMessage, 
-        string | null, 
-        Common.ChangeHandler<HTMLInputElement>,
-        Common.MouseHandler<HTMLInputElement>
-      ]
-      const modalInfoMap = new Map<Kind, ModalInfo>()
-      modalInfoMap[Kind.email] = [
-        {title: 'Please insert your email'}, 
-        this.state.email, 
-        this.handleEmailInput.bind(this),
-        this.withEmail.bind(this)
-      ]
-      modalInfoMap[Kind.phone] = [
-        {title: 'Please insert your phone number'}, 
-        this.state.phone, 
-        this.handlePhoneInput.bind(this),
-        this.withPhone.bind(this)
-      ]
-      const modalInfo = modalInfoMap[this.state.kind]
+      const isEmail = this.state.kind == Kind.email
       return (
         <Fragment>
-          {
-            this.state.kind != Kind.unknown ?
-            <Modal isOpen>
-                <ModalHeader>{modalInfo[0].title}</ModalHeader>
-                <ModalBody>
-                <Input
-                  value={modalInfo[1]}
-                  onChange={modalInfo[2]} />
-                <Row id='recaptcha'>
-                </Row>
-                </ModalBody>
-                <ModalFooter>
-                  <Button color='secondary' onClick={() => this.setState({kind: Kind.unknown})}>
-                    Back
-                  </Button>
-                  <Button color='primary' onClick={modalInfo[3]}>
-                    Login
-                  </Button>
-                </ModalFooter>
-              </Modal> 
-            : null
-          }          
+          <Modal isOpen={this.state.kind != Kind.unknown} onOpened={() => this.handleModalOpen()}>
+            <ModalHeader>
+            {
+              isEmail ? "Please insert your email" : "Please insert your phone number"
+            }
+            </ModalHeader>
+            <Form>
+              <ModalBody>
+                <FormGroup>
+                  <Input innerRef={(inner) => this.fieldInputRef = inner} />
+                </FormGroup>
+                <div ref={this.recaptchaRef}></div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color='secondary' onClick={() => this.setState({kind: Kind.unknown})}>
+                  Back
+                </Button>
+                <Button innerRef={(inner) => this.sendButtonRef = inner}
+                  color='primary' 
+                  disabled={!this.state.isCaptchaReady}>
+                  Login
+                </Button>
+              </ModalFooter>
+            </Form>
+          </Modal>          
           <Jumbotron>
             <Helmet>
               <title>Login</title>
