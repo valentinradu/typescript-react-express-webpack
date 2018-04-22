@@ -56,8 +56,13 @@ namespace Common {
     token?: string
     user?: User
     ordersFilter: OrderFilter
-    csrf: string,
     orderResourcesMap: { [Key: string]: any }
   }
+  export interface UIMessage {
+    title: string,
+    message?: string
+  }
+  export type ChangeHandler<T> = (event: React.ChangeEvent<T>) => void
+  export type MouseHandler<T> = (event: React.MouseEvent<T>) => void
 }
 export default Common

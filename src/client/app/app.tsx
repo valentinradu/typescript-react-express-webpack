@@ -15,12 +15,21 @@ namespace App {
     model: Common.Model,
   }
   export class Component extends React.Component<Props, State> {
+    modelSubs?: Rx.Subscription
     constructor (props: Props) {
       super(props)
-      props.modelObservable
+      this.state = { model: props.modelObservable.value }
+    }
+    componentDidMount () {
+      this.modelSubs = this.props.modelObservable
         .subscribe((model) => {
           this.setState({ model })
         })
+    }
+    componentWillUnmount () {
+      if (this.modelSubs) {
+        this.modelSubs.unsubscribe()
+      }
     }
     render () {
       const { modelObservable, client } = this.props

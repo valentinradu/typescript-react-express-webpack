@@ -16,8 +16,10 @@ export namespace Orders {
       order: Common.Order
     }
     export type Variables = {
-      token: string,
-      filtering?: Common.OrderFilter
+      params: {
+        token: string,
+        filtering?: Common.OrderFilter
+      }
     }
   }
   export namespace Register {
@@ -33,16 +35,18 @@ export namespace Orders {
       order: Common.Order
     }
     export type Variables = {
-      token: string,
-      category: Common.OrderCategory,
-      pickup: Common.Location,
-      dropoff: Common.Location,
-      pickupAddress: Common.Address,
-      dropoffAddress: Common.Address,
-      scheduledDate?: string,
-      recipientFirstName?: string,
-      recipientLastName?: string,
-      recipientPhoneNumber?: string
+      params: {
+        token: string,
+        category: Common.OrderCategory,
+        pickup: Common.Location,
+        dropoff: Common.Location,
+        pickupAddress: Common.Address,
+        dropoffAddress: Common.Address,
+        scheduledDate?: string,
+        recipientFirstName?: string,
+        recipientLastName?: string,
+        recipientPhoneNumber?: string
+      }
     }
   }
   export namespace Get {
@@ -58,8 +62,10 @@ export namespace Orders {
       orders: [Common.Order]
     }
     export type Variables = {
-      token: string,
-      filtering?: Common.OrderFilter,
+      params: {
+        token: string,
+        filtering?: Common.OrderFilter
+      }
     }
   }
 }

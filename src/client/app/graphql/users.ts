@@ -16,12 +16,14 @@ export namespace Users {
       user: Common.User
     }
     export type Variables = {
-      token: string,
-      firstName: string,
-      lastName: string,
-      role: Common.Role,
-      phoneNumber?: string
-      email?: string
+      params: {
+        token: string,
+        firstName: string,
+        lastName: string,
+        role: Common.Role,
+        phoneNumber?: string
+        email?: string
+      }
     }
   }
   export namespace Update {
@@ -37,12 +39,14 @@ export namespace Users {
       user: Common.User
     }
     export type Variables = {
-      token: string,
-      iban?: string,
-      company?: Common.Company
-      status: Common.AccountStatus,
-      location?: Common.Location,
-      id?: string
+      params: {
+        token: string,
+        iban?: string,
+        company?: Common.Company
+        status: Common.AccountStatus,
+        location?: Common.Location,
+        id?: string
+      }
     }
   }
   export namespace Get {
@@ -58,7 +62,9 @@ export namespace Users {
       user: Common.User
     }
     export type Variables = {
-      token: string,
+      params: {
+        token: string
+      }
     }
   }
 }
@@ -73,10 +79,12 @@ export namespace Token {
       }
     }`
     export type Response = {
-      user: string
+      token: string
     }
     export type Variables = {
-      token: string
+      params: {
+        token: string
+      }
     }
   }
 }

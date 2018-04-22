@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Fragment } from 'react'
+import * as ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo'
 import client from './apollo-client'
 import App from './app'
@@ -7,14 +8,23 @@ import * as Rx from 'rxjs'
 import * as moment from 'moment'
 import { orderResourcesMap } from './order-resources-map'
 import Common from './interfaces'
-import * as uuid from 'uuid'
 import { get as getCookie } from 'es-cookie'
+import { Helmet } from 'react-helmet'
+import * as firebase from 'firebase'
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalFooter,
+  ModalBody
+} from 'reactstrap'
 
 namespace Index {
   export interface Props {
   }
   export interface State {
     modelObservable: Rx.BehaviorSubject<Common.Model>
+    error?: Error
   }
   export class Component extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -34,30 +44,51 @@ namespace Index {
             end: end
           }
         },
-        csrf: uuid.v4(), // Totally useless right now since we're not checking this on server
         orderResourcesMap
       }
-      this.setState({
+      this.state = { 
         modelObservable: new Rx.BehaviorSubject(model)
-      })
+      }
+      var config = {
+        apiKey: 'AIzaSyAKWwTfmNE3_KwzCO4qmcHDSEmXcVApNbI',
+        authDomain: 'kinetic-bot-191809.firebaseapp.com',
+        projectId: 'kinetic-bot-191809'
+      };
+      firebase.initializeApp(config);
+    }
+    componentDidCatch (error: Error, errorInfo: React.ErrorInfo) {
+      this.state.modelObservable.error(error)
     }
     render () {
       return (
         <Fragment>
-          <style>{`
-            html,body {
-              width:100%;
-              height:100%;
-            }
-            body {
-              background-color: #f7f7f7;
-            }
-            ul.react-datepicker__time-list {
-              padding-left: 0;
-              padding-right: 0;
-            }
-          `}</style>
-  
+          <Helmet>
+            <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' />
+            <style>{`
+              html,body {
+                width:100%;
+                height:100%;
+              }
+              body {
+                background-color: #f7f7f7;
+              }
+              ul.react-datepicker__time-list {
+                padding-left: 0;
+                padding-right: 0;
+              }
+            `}</style>
+          </Helmet>
+          <Modal isOpen={Boolean(this.state.error)}>
+            <ModalHeader>An error happened!</ModalHeader>
+            <ModalBody>
+              We sorry. We fix it. {this.state.error}
+            </ModalBody>
+            <ModalFooter>
+              <Button color='primary'>
+                Ok
+              </Button>
+            </ModalFooter>
+          </Modal>
           <ApolloProvider client={client}>
             <App modelObservable={this.state.modelObservable} client={client}/>
           </ApolloProvider>
@@ -67,5 +98,4 @@ namespace Index {
   }
 }
 
-
-export default Index.Component
+ReactDOM.render(<Index.Component />, document.getElementById('app'))
